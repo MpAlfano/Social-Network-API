@@ -40,10 +40,7 @@ const thoughtSchema = new Schema(
       },
     },
     username: { type: String, required: true, ref: "user" },
-    reactions: {
-      type: reactionSchema.Type.ObjectId,
-      ref: "reaction",
-    },
+    reactions: [reactionSchema],
   },
 
   {
