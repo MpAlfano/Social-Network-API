@@ -10,7 +10,7 @@ module.exports = {
   },
   getOne(req, res) {
     Thought.findOne()
-      .select("-_v")
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(400).json({ message: "Not thoughts with that ID" })
@@ -18,15 +18,16 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  newThought() {
+  newThought(req, res) {
     Thought.create(req.body).then((dbThoughtData) =>
       !dbThoughtData
         ? res.status(404).json({ message: "Failed to create thought." })
-        : User.updateOne(
+        : User.findOneAndUpdate(
             { _id: req.body.userId },
             { $addToSet: { thoughts: dbThoughtData._id } },
             { new: true }
           )
+            .select("-__v")
             .then((dbUserData) =>
               !dbUserData
                 ? res.status(400).json({ message: "No user with this ID" })
