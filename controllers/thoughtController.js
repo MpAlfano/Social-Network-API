@@ -38,7 +38,7 @@ module.exports = {
             .catch((err) => res.status(500).json(err))
     );
   },
-  // Updating though by ID
+  // Updating thought by ID
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -94,7 +94,7 @@ module.exports = {
           : res.json(dbReactionData)
       );
   },
-  // Deleting reaction fron thought by ID with reaction ID
+  // Deleting reaction from thought by ID with reaction ID
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -103,8 +103,8 @@ module.exports = {
     )
       .then((dbReactionData) =>
         !dbReactionData
-          ? res.status(404).json({ message: "No thought found with this ID!" })
-          : res.json({ message: "Reaction deleted!" })
+          ? res.status(404).json({ message: "Found no thought with this ID." })
+          : res.json({ message: "Reaction was deleted." })
       )
       .catch((err) => res.status(500).json(err));
   },
