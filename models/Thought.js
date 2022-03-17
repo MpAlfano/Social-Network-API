@@ -19,9 +19,8 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdVal) => {
-        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a");
-      },
+      get: (createdVal) =>
+        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a"),
     },
   },
   {
@@ -42,10 +41,10 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
+      required: true,
       default: Date.now,
-      get: (createdVal) => {
-        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a");
-      },
+      get: (createdVal) =>
+        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a"),
     },
     username: { type: String, required: true, ref: "user" },
     reactions: [reactionSchema],

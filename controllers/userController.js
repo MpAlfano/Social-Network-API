@@ -38,7 +38,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  //Deleting a user
+  // Deleting a user by ID
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
@@ -48,7 +48,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-
+  // Adding friend to user by ID of the friend user ID
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -64,7 +64,7 @@ module.exports = {
           : res.json(dbUserData)
       );
   },
-
+  // Deleting friend from User by ID
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
