@@ -15,7 +15,8 @@ Back-end application to store users, thoughts and reactions in a database. Allow
 
 ## DEMO
 
-![Screenshot (591)](https://user-images.githubusercontent.com/96558916/157590091-85e7bccc-9606-4dab-b186-075af0eae047.png)
+![Screenshot (598)](https://user-images.githubusercontent.com/96558916/158898428-0ebf3d6a-007e-4f28-a6d7-40dd1de71f9f.png)
+
 
 ## Deployment
 
