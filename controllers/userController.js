@@ -1,5 +1,4 @@
-const { application } = require("express");
-const User = require("../models/User");
+const { User, Thought } = require("../models");
 
 module.exports = {
   //Get all users
@@ -12,7 +11,6 @@ module.exports = {
   // Get one user
   getOne(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select("-__v")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
@@ -49,5 +47,37 @@ module.exports = {
           : res.json({ message: "User has been deleted." })
       )
       .catch((err) => res.status(500).json(err));
+  },
+
+  addFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true, runValidators: true }
+    )
+      .select("-__v")
+      .then((dbUserData) =>
+        !dbUserData
+          ? res
+              .status(400)
+              .json({ message: "Failed to add friend to user with that ID" })
+          : res.json(dbUserData)
+      );
+  },
+
+  deleteFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { new: true, runValidators: true }
+    )
+      .select("-__v")
+      .then((dbUserData) =>
+        !dbUserData
+          ? res.status(400).json({
+              message: "Failed to remove friend from user with that ID",
+            })
+          : res.json(dbUserData)
+      );
   },
 };

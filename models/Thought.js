@@ -1,28 +1,36 @@
 const { Schema, Types, model } = require("mongoose");
 const dayjs = require("dayjs");
 
-const reactionSchema = new Schema({
-  reactionId: {
-    type: Types.ObjectId,
-    default: new Types.ObjectId(),
-  },
-  reactionBody: {
-    type: String,
-    required: true,
-    maxlength: [280, "Can't exceed 280 characters."],
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (createdDate) => {
-      dayjs(createdDate).format("MMM DD, YYYY. hh:mm a");
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Types.ObjectId,
+      default: new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: [280, "Can't exceed 280 characters."],
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdVal) => {
+        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a");
+      },
     },
   },
-});
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
+);
 
 const thoughtSchema = new Schema(
   {
@@ -35,8 +43,8 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdDate) => {
-        dayjs(createdDate).format("MMM DD, YYYY. hh:mm a");
+      get: (createdVal) => {
+        dayjs(createdVal).format("MMM DD, YYYY [at] hh:mm a");
       },
     },
     username: { type: String, required: true, ref: "user" },
@@ -46,6 +54,7 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
